@@ -1,0 +1,50 @@
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+// 구조체 : 다른 데이터형이 허용되는 데이터의 집합.
+
+int main() {
+    struct MyStruct
+    {
+        string name;
+        string position;
+        int height;
+        int weight;
+    } B;
+
+    MyStruct A;
+    A.name = "Son";
+    A.position = "Striker";
+    A.height = 183;
+    A.weight = 77;
+    /*
+    MyStruct A = {
+        "Son",
+        "Striker",
+        183,
+        77
+    }
+    */
+    cout << A.name << endl;
+    cout << A.position << endl;
+    cout << A.height << endl;
+    cout << A.weight << endl;
+
+    // 구조체 안을 비워두면, 0으로 초기화된다.
+    B = {
+
+    };
+    cout << B.height << endl;
+
+    // 구조체 배열
+    MyStruct C[2] = {
+        {"A", "A", 1, 1},
+        {"B", "B", 2, 2}
+    };
+
+    cout << C[0].height << endl;
+
+    return 0;
+}
