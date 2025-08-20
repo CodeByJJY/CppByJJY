@@ -1,0 +1,51 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	/*
+	* 공용체(Union) : 서로 다른 데이터형을 한 번에 한가지만 보관할 수 있음.
+	*/
+	union Myunion {
+		int intVal;
+		long longVal;
+		float floatVal;
+	};
+
+	Myunion test;
+	test.intVal = 3;
+	test.longVal = 33;
+	test.floatVal = 3.3;
+
+	cout << test.intVal << endl;
+	cout << test.longVal << endl;
+	cout << test.floatVal << endl;
+
+	/*
+	* 열거체(Enum) : 기호 상수를 만드는 것에 대한 또다른 방법.
+	1. spectrum을 새로운 데이터형으로 만든다.
+	2. red, orange, yellow,...를 0~7의 정수 값으로 각각 나타내는 기호 상수로 만든다.
+	*/
+	enum spectrum {
+		red, orange, yellow, green, blue, violet, indigo, ultraviolet
+	};
+
+	spectrum a = orange;
+	cout << a << endl;
+
+	// spectrum a = orange + red;     산술 연산이 지원되지는 않는다.
+	// 그러나 다음의 코드처럼, int 자료형의 변수에 값을 저장하고 산술연산하는 것은 가능하다:
+	int b;
+	b = orange;
+	b = blue + 3;
+	cout << b << endl;
+
+	// 아래처럼, 기호 상수에 값을 명시해주는 것도 가능하다.
+	// 명시되지 않은 candy는, 이전 값 banana=1에 +1 된 정수가 저장된다.
+	// 무조건 정수로만 사용될 수 있다.
+	enum specified {
+		apple = 0, banana = 1, candy
+	};
+
+	return 0;
+}
