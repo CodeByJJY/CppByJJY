@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	/*
+	* ASCII 코드 : 문자 하나에 대응되는 숫자 체계.
+	*/
+
+	/*
+	* char : 작은 문자형, 문자 하나만 저장 가능하다. -> 작은 따옴표('')만 사용하기
+	* string : 큰 문자열 -> 큰 따옴표("")만 사용하기
+	* 이유 : null 문자('\0') 때문.
+	* C++에서는 문자 역시 정수롤 변환하여 받아들이기 때문에, null을 통해 어디까지가 문자인지 파악한다.
+	* 큰 따옴표("")에서는, 명시적으로 null 문자가 포함되어 있다.
+	*/
+	int a = 77;
+	char b = a;
+	char c = 'M';
+
+	cout << b << endl;		// 출력 : 'M'
+	cout << c << endl;		// 출력 : 'M'
+
+	// null 문자 명시의 필요성
+	char d[] = { 'a', 'b', 'c' };
+	char e[] = { 'a', 'b', 'c', '\0'};
+	cout << d << endl;			// abc 출력 후, 우연히 null 문자를 만날 때까지 쓰레기값이 계속 출력된다.
+	cout << e << endl;			// abc
+
+
+
+
+	/*
+	* bool형 ; 0 또는 1 만 표현 가능.
+	* True/False 표현 가능.
+	* 조건문에서 많이 사용
+	* 0 이외의 모든 수는 1로 저장된다.
+	*/
+	
+	bool f = 0;
+	bool g = 1;
+	bool h = 10;
+	cout << f << g << h << endl;		// 출력 : 011
+
+	return 0;
+}
