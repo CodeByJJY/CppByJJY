@@ -1,0 +1,39 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	// 아래의 두 for문은 정확하게 동일!
+	for (int i = 0; i < 5; i++) {
+		cout << i << "번째입니다." << endl;
+	}
+
+	cout << endl;
+
+	for (int i = 0; i < 5;) {
+		cout << i << "번째입니다." << endl;
+		i = i + 1;
+	}
+
+	cout << endl;
+
+	// 감소 연산자 사용
+	for (int i = 5; i > 0; i--) {
+		cout << i << "번째입니다." << endl;
+	}
+
+	cout << endl;
+
+	// 증가 연산자, 감소 연산자
+	int a = 10;
+	int b = 10;
+
+	cout << "a는" << a << ", b는 " << b << endl;
+	cout << "a++는" << a++ << endl;			// 10 : 변수의 값을 판단하고, 증가시킨다.
+	cout << "++b는" << ++b << endl;			// 11 : 변수의 값을 증가시키고, 판단한다.
+
+	// 비교 연산자
+	// <, <=, >, >=, ==, !=
+
+	return 0;
+}
