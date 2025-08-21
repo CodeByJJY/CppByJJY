@@ -1,0 +1,79 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	// switch 구문
+	/*
+	switch (integer_expression)
+	{
+	case label1:
+		code#1
+	case label2:
+		code#2
+	case label3:
+		code#3
+	case label4:
+		code#4
+	case label5:
+		code#5
+	}
+	*/
+	int a;
+	cin >> a;
+	switch (a) {
+	case 1:
+		cout << "입력하신 값은 1입니다.\n";
+		break;
+	case 2:
+		cout << "입력하신 값은 2입니다.\n";
+		break;
+	case 3:
+		cout << "입력하신 값은 3입니다.\n";
+		break;
+	default:
+		cout << "입력하신 값은 1,2,3 이외의 다른 값입니다.\n";
+		break;
+	}
+
+	cout << "switch 구문이 끝났습니다.\n" << endl;
+
+	// break 문의 역할
+	/*
+	* 기본 역할: switch/반복문 안에서, 밑에 해당하는 구문들을 건너뛰고 switch/반복문을 종료하는 역할을 한다.
+	* 해당되는 케이스부터 그 아래의 모든 구문, 심지어 case에 해당되지 않는 구문까지 다 실행한다.
+	* 예를 들어, 위의 switch문에 break문이 없다면, 1을 입력했을 때 case1~3/default에 해당하는 구문들이 전부 실행된다.
+	*/
+	int i = 0;
+	while (true) {
+		cout << "i의 값은 " << i << " 입니다.\n";
+		if (i > 10)
+			break;
+		i++;
+	}
+
+	// continue 문의 역할
+	/*
+	* 기본 역할 : 반복문 안에서, 밑의 구문을 건너뛰고 다음 반복을 실행하도록 한다.
+	* 오직 반복문에서만 사용 가능하다.
+	*/
+	const int SIZE = 30;
+	cout << "문장을 입력하십시오\n";
+	char line[SIZE];
+	cin.get(line, SIZE);
+	cout << "입력하신 문장은\n";
+	int spaces= 0;
+	for (int i = 0 ; line[i] != '\0' ; i++) {
+		cout << line[i];
+
+		if (line[i] == ' ')
+			continue;
+
+		spaces++;
+	}
+	cout << "입니다.\n";
+	cout << "입력하신 문장에서 공백을 제외한 문자 수는 " << spaces << "개 입니다\n";
+	cout << "while문이 끝났습니다\n";
+
+	return 0;
+}
