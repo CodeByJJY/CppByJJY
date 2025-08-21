@@ -1,0 +1,44 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	// while 문
+	int i = 0;
+	while (i < 3) {
+		i++;
+	}
+
+	string str = "Panda";				// "" : '\0'(개행문자)를 포함.
+	int j = 0;
+	while (str[j] != '\0') {
+		cout << str[j] << endl;
+		j++;
+	}
+
+	// do while 문
+	int k = 0;
+	do {
+		cout << "while문 입니다.\n";
+		k++;
+	} while (k < 3);
+
+	cout << endl;
+
+	// while vs. do while 문 차이
+	/*
+	* while : 괄호 안이 false이면, 애초에 실행을 하지 않는다.
+	* do while : 괄호 안이 false 더라도, 우선은 실행을 한다.
+	*/
+	bool a = false;
+	// 실행 x
+	while (a) {
+		cout << "while문 입니다.\n";
+	}
+	// 실행 1회
+	do {
+		cout << "while문 입니다.\n";
+	} while (a);
+
+	return 0;
+}
