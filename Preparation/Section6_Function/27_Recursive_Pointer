@@ -1,0 +1,58 @@
+#include <iostream>
+
+using namespace std;
+
+void countDown(int);
+
+int main() {
+	// 재귀호출 : C++에서 함수는 자기 자신을 호출할 수 있다.
+	/*
+	* 예시;
+	void recurs(argumentList){
+		// code#1
+		if (condition)
+			recurs(argumentList);
+		// code#2
+	}
+	*/
+
+	countDown(5);
+
+	return 0;
+}
+
+void countDown(int n) {
+	cout << "Counting..." << n << endl;
+	if (n > 0)
+		countDown(n - 1);
+	cout << n << "번째 재귀함수" << endl;
+}
+
+==================================================================
+
+#include <iostream>
+
+using namespace std;
+
+int func(int);
+
+int main() {
+	// 함수를 지시하는 포인터
+	/*
+	* 사용되는 경우 : 함수의 주소를 매개변수로 넘겨줄 때.
+	1. 함수의 주소를 얻는다.
+	2. 함수를 지시하는 포인터를 선언한다.
+	3. 함수를 지시하는 포인터를 사용하여, 그 함수를 호출한다.
+	*/
+	int (*pf)(int);
+	pf = func;		// pf가 함수 이름과 동일한 역할을 수행한다.
+
+	cout << pf << endl;			// 함수 옆의 소괄호('()')를 생략하고, ,함수 이름만 쓴다.
+	cout << (*pf)(3) << endl;		// pf가 함수 이름을 대체한다.
+
+	return 0;
+}
+
+int func(int n) {
+	return n + 1;
+}
