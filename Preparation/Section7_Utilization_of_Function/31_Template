@@ -1,0 +1,26 @@
+#include <iostream>
+
+using namespace std;
+
+// class 또는 typeName
+template <class Any>
+Any sum(Any, Any);
+
+int main() {
+	// 함수 템플릿 : 함수의 일반화에 대한 서술.
+	// 구체적인 데이터형을 포활할 수 있는 일반형으로 함수를 정의.
+	int a = 3;
+	int b = 4;
+	cout << sum(a, b) << endl;		// Any = int
+
+	float c = 3.14;
+	float d = 1.592;
+	cout << sum(c, d) << endl;		// Any = float
+
+	return 0;
+}
+
+template <class Any>
+Any sum(Any a, Any b) {
+	return a + b;
+}
