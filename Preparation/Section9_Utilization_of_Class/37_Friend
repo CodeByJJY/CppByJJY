@@ -1,0 +1,110 @@
+// time.h
+#include <iostream>
+#ifndef TIMEH
+#define TIMEH
+
+class Time {
+private:
+	int hours;
+	int mins;
+
+public:
+	Time();
+	Time(int, int);
+	void addHours(int);
+	void addMins(int);
+	Time operator+(Time&);
+	Time operator*(int);
+	void show();
+	~Time();
+	friend Time operator*(int n, Time& t){		// 멤버함수가 아니다 : '.', '->' 연산자를 통해 호출할 수 없다.
+		return t * n;
+	}
+};
+
+#endif
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// func.cpp
+#include "time.h"
+
+using namespace std;
+
+Time::Time()
+{
+	hours = mins = 0;
+}
+Time::Time(int h, int m)
+{
+	hours = h;
+	mins = m;
+}
+void Time::addHours(int h)
+{
+	hours += h;
+}
+void Time::addMins(int m)
+{
+	mins += m;
+	hours += mins / 60;
+	mins %= 60;
+}
+Time Time::operator+(Time& t)
+{
+	Time sum;
+	sum.mins = mins + t.mins;
+	sum.hours = hours + t.hours;
+	sum.hours += sum.mins / 60;
+	sum.mins %= 60;
+	return sum;
+}
+void Time::show()
+{
+	cout << "시간 : " << hours << endl;
+	cout << "분 : " << mins << endl;
+}
+Time::~Time()
+{
+
+}
+
+Time Time::operator*(int n) {
+	Time result;
+	long resultMin = hours * n * 60 + mins * n;
+	result.hours = resultMin / 60;
+	result.mins = resultMin % 60;
+	return result;
+}
+
+// 멤버함수가 아니므로
+// 사용범위 연산자를 사용하지 않는다.
+// friend라는 키워드도 사용하지 않는다.
+Time operator* (int n, Time& t)
+{
+	Time result;
+	long resultMin = t.hours * n * 60 + t.mins * n;
+	result.hours = resultMin / 60;
+	result.mins = resultMin % 60;
+	return result;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// main.cpp
+#include <iostream>
+#include "time.h"
+
+using namespace std;
+
+int main() {
+	// C++ friend
+	/*
+	* friend로 지정된 함수는, 클래스 내의 private 지정된 변수와 함수에 접근할 수 있다.
+	*/
+	Time t1(1, 20);
+	Time t2;
+
+	t2 = 3 * t1;
+	// t2 = operator*(3, t1);
+
+	t2.show();
+
+	return 0;
+}
