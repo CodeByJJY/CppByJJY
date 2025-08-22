@@ -1,0 +1,157 @@
+// time.h
+
+#include <iostream>
+#ifndef TIMEH
+#define TIMEH
+
+// 기초 클래스
+class Time {
+private:
+	int hours;
+	int mins;
+
+public:
+	Time();
+	Time(int, int);
+	void addHours(int);
+	void addMins(int);
+	Time operator+(Time&);
+	Time operator*(int);
+	void show();
+	~Time();
+	friend Time operator*(int n, Time& t){		// 멤버함수가 아니다 : '.', '->' 연산자를 통해 호출할 수 없다.
+		return t * n;
+	}
+	friend std::ostream& operator<<(std::ostream&, Time&);
+};
+
+// 파생 클래스
+/*
+1. 파생 클래스형의 객체 안에는 기초 클래스형의 데이터 멤버들이 저장된다.
+2. 파생 클래스형의 객체는 기초 클래스형의 메서드들을 사용할 수 있다.
+	- 단, 기초 클래스의 private 지정된 멤버들에게는 접근할 수 없다.
+3. 파생 클래스는 자기 자신의 생성자를 필요로 한다.
+4. 파생 클래스는 부가적인 데이터 멤버들과 멤버 함수들을 임의로 추가할 수 있다.
+*/
+class NewTime : public Time {
+private:
+	int day;
+public:
+	NewTime();
+	NewTime(int, int, int);
+	void print();
+};
+
+#endif
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// func.cpp
+
+#include "time.h"
+
+using namespace std;
+
+Time::Time()
+{
+	hours = mins = 0;
+}
+Time::Time(int h, int m)
+{
+	hours = h;
+	mins = m;
+}
+void Time::addHours(int h)
+{
+	hours += h;
+}
+void Time::addMins(int m)
+{
+	mins += m;
+	hours += mins / 60;
+	mins %= 60;
+}
+Time Time::operator+(Time& t)
+{
+	Time sum;
+	sum.mins = mins + t.mins;
+	sum.hours = hours + t.hours;
+	sum.hours += sum.mins / 60;
+	sum.mins %= 60;
+	return sum;
+}
+void Time::show()
+{
+	cout << "시간 : " << hours << endl;
+	cout << "분 : " << mins << endl;
+}
+Time::~Time()
+{
+
+}
+
+Time Time::operator*(int n) {
+	Time result;
+	long resultMin = hours * n * 60 + mins * n;
+	result.hours = resultMin / 60;
+	result.mins = resultMin % 60;
+	return result;
+}
+
+// 멤버함수가 아니므로
+// 사용범위 연산자를 사용하지 않는다.
+// friend라는 키워드도 사용하지 않는다.
+//Time operator* (int n, Time& t)
+//{
+//	Time result;
+//	long resultMin = t.hours * n * 60 + t.mins * n;
+//	result.hours = resultMin / 60;
+//	result.mins = resultMin % 60;
+//	return result;
+//}
+
+// 리턴값 : os의 참조.
+// os : 출력 스트림 객체(ostream)의 참조
+// 즉, std::cout, std::cerr, std::ofstream 같은 실제 스트림 객체를 나타낸다.
+std::ostream& operator<<(std::ostream& os, Time& t)
+{
+	os << t.hours << "시간 " << t.mins << "분";
+	return os;
+}
+
+NewTime::NewTime() : Time() {
+	day = 0;
+}
+
+NewTime::NewTime(int h, int m, int d) : Time(h, m) {
+	day = d;
+}
+
+void NewTime::print() {
+	cout << "일 : " << day << endl;
+	show();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// main.cpp
+
+#include <iostream>
+#include "time.h"
+
+using namespace std;
+
+int main() {
+	// 상속
+	/*
+	1. 기존의 클래스에 새로운 새로운 기능을 추가할 수 있다.
+	2. 클래스가 나타내고 있는 데이터에 다른 것을 더 추가할 수 있다.
+	3. 클래스 메서드가 동작하는 방식을 변경할 수 있다.
+	*/
+
+	NewTime temp1();
+	NewTime temp2(3, 30, 2);
+	temp2.print();
+
+	return 0;
+}
