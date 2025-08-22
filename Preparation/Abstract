@@ -1,0 +1,42 @@
+// 프로그래밍 기초 (Ch 1 ~ 4)
+/*
+* Data & Complex Data
+* Loop
+* Branch Syntax
+*/
+
+// 함수와 활용 (Ch 5 ~ 6)
+/*
+* Function
+* Overloading
+* Template
+*/
+
+// 클래스와 활용 (Ch 7 ~ 9)
+/*
+* Class
+* Inheritance
+*/
+
+// 못 다룬 거
+/*
+* String, Vector, Map
+* Memory
+* File I/O
+*/
+
+// 객체지향언어의 특징
+/*
+* 캡슐화
+* 정보 은닉
+* 추상화
+* 상속성
+* 다형성
+*/
+
+// 앞으로 할 것
+/*
+* 간단한 자료구조(스택, 큐) 구현해보기
+* 알고리즘 기초문제 풀어보기
+* 다른 C++ 기능/문법 학습하기
+*/
