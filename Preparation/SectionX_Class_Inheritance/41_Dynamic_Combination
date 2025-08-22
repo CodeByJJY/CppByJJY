@@ -1,0 +1,194 @@
+// time.h
+
+#include <iostream>
+#ifndef TIMEH
+#define TIMEH
+
+// 기초 클래스
+class Time {
+private:
+	int hours;
+	int mins;
+
+public:
+	Time();
+	Time(int, int);
+	void addHours(int);
+	void addMins(int);
+	Time operator+(Time&);
+	Time operator*(int);
+	virtual void show();									// show()를 상속받아서 print 대신 사용해 보자.
+	/*
+	1. 기초 클래스에서 가상 메서드(virtual ~)를 선언하면,
+		그 함수는 기초 클래스 및 파생되는 클래스에서 모두 가상이 된다.
+	2. 객체에 대한 참조를 사용하여, 객체를 지시하는 포인터를 사용하여 가상 메서드가 호둘되면
+		참조나 포인터를 위해 정희된 메서드를 사용하지 않고 객체형을 위해 정의된 메서드를 사용한다	->		동적 결합.
+	3. 상속을 위해 기초 클래스로 사용할 클래스를 정의할 떄,
+		파생 클래스에서 다시 정의해야 되는 클래스 메서드들은 "가상 함수"로 선언한다.
+	*/
+	virtual ~Time();
+	int getHour() { return hours; }
+	int getMins() { return mins; }
+	friend Time operator*(int n, Time& t){		// 멤버함수가 아니다 : '.', '->' 연산자를 통해 호출할 수 없다.
+		return t * n;
+	}
+	friend std::ostream& operator<<(std::ostream&, Time&);
+};
+
+// 파생 클래스
+class NewTime : public Time {
+private:
+	int day;
+public:
+	NewTime();
+	NewTime(int, int, int);
+	void show();
+};
+
+#endif
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// func.cpp
+
+#include "time.h"
+
+using namespace std;
+
+Time::Time()
+{
+	hours = mins = 0;
+}
+Time::Time(int h, int m)
+{
+	hours = h;
+	mins = m;
+}
+void Time::addHours(int h)
+{
+	hours += h;
+}
+void Time::addMins(int m)
+{
+	mins += m;
+	hours += mins / 60;
+	mins %= 60;
+}
+Time Time::operator+(Time& t)
+{
+	Time sum;
+	sum.mins = mins + t.mins;
+	sum.hours = hours + t.hours;
+	sum.hours += sum.mins / 60;
+	sum.mins %= 60;
+	return sum;
+}
+void Time::show()
+{
+	cout << "시간 : " << hours << endl;
+	cout << "분 : " << mins << endl;
+}
+Time::~Time()
+{
+
+}
+
+Time Time::operator*(int n) {
+	Time result;
+	long resultMin = hours * n * 60 + mins * n;
+	result.hours = resultMin / 60;
+	result.mins = resultMin % 60;
+	return result;
+}
+
+// 멤버함수가 아니므로
+// 사용범위 연산자를 사용하지 않는다.
+// friend라는 키워드도 사용하지 않는다.
+//Time operator* (int n, Time& t)
+//{
+//	Time result;
+//	long resultMin = t.hours * n * 60 + t.mins * n;
+//	result.hours = resultMin / 60;
+//	result.mins = resultMin % 60;
+//	return result;
+//}
+
+// 리턴값 : os의 참조.
+// os : 출력 스트림 객체(ostream)의 참조
+// 즉, std::cout, std::cerr, std::ofstream 같은 실제 스트림 객체를 나타낸다.
+std::ostream& operator<<(std::ostream& os, Time& t)
+{
+	os << t.hours << "시간 " << t.mins << "분";
+	return os;
+}
+
+NewTime::NewTime() : Time() {
+	day = 0;
+}
+
+NewTime::NewTime(int h, int m, int d) : Time(h, m) {
+	day = d;
+}
+
+void NewTime::show() {
+	cout << "일 : " << day << endl;
+	cout << "시간 : " << getHour() << endl;
+	cout << "분 : " << getMins() << endl;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// main.cpp
+
+#include <iostream>
+#include "time.h"
+
+using namespace std;
+
+const int MAX = 3;
+
+int main() {
+	Time* times[MAX];
+
+	int day;
+	int hours;
+	int mins;
+
+	for (int i = 0 ; i < MAX ; i++)
+	{
+		cout << i + 1 << "번째 원소를 정의합니다." << endl;
+		cout << "시간을 입력하십시오. " << endl;
+		cin >> hours;
+		cout << "분을 입력하십시오. " << endl;
+		cin >> mins;
+		char check;
+		cout << "일 정보가 있다면 1, 없다면 0을 입력하십시오. " << endl;
+		cin >> check;
+		if (check == '0')
+			times[i] = new Time(hours, mins);
+		else {
+			cout << "일을 입력하십시오. " << endl;
+			cin >> day;
+			times[i] = new NewTime(hours, mins, day);
+		}
+	}
+
+	for (int i = 0; i < MAX; i++) {
+		cout << i + 1 << "번째 정보입니다. " << endl;
+		times[i]->show();
+	}
+
+	/*
+	포인터는 Time 클래스로 정의되었지만,
+	만약 NewTime 클래스의 객체가 저장되어 있다면, 
+	show()는 NewTIme에 대응되어 실행되는 점을 확인할 수 있다.
+	*/
+
+	// 소멸자로 newTime도 같이 소멸시키기 위해서는
+	// 소멸자를 virtual로 선언한다.
+	for (int i = 0; i < MAX; i++) {
+		delete times[i];
+	}
+
+	return 0;
+}
