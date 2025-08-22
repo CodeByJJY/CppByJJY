@@ -1,0 +1,67 @@
+// struct.h
+// Header File
+/*
+1. 함수 원형
+2. #define이나 const를 사용하는 기호 상수
+3. 구조체 선언
+4. 클래스 선언
+5. 템플릿 선언
+6. 인라인 함수
+*/
+#ifndef STRUCT
+#define STRUCT
+#include <iostream>
+
+using namespace std;
+
+struct MyStruct {
+	string name;
+	int age;
+};
+
+void display(MyStruct&); 
+#endif
+//#pragma once
+
+=========================================================================================
+// func.cpp
+#include "struct.h"
+
+void display(MyStruct& temp) {
+	cout << "이름 : " << temp.name << endl;
+	cout << "나이 : " << temp.age << endl;
+}
+
+=========================================================================================
+// main.cpp
+#include "struct.h"
+#include "new.h"
+// 헤더 파일을 여러 파일에 포함시킬 때
+// 반드시 단 한번만 포함시켜야 한다.
+/*
+* 예를 들어, struch.h 헤더파일을 포함시킨 new.h 헤더파일을 main에 포함시키면,
+    컴파일 시 변수들이 여러 번 선언되었다는 에러를 마주치게 된다.
+*/
+/*
+* 해결 방법
+	[구문]
+	#ifndef (매크로 이름)
+	#define (매크로 이름)
+	....
+	#endif
+*/
+/* 해결방법 해석
+	1. main.cpp에서 struct.h를 include한다.
+	2. 이후new.h를 include할 때, struct.h도 include하려 할 것이다.
+	3. 이 때, (매크로 이름)으로 이미 포함된 struct.h의 코드가, "#ifndef"~"#endif"까지 무시된다.
+*/
+
+int main() {
+	MyStruct PandaCoding = {
+		"Panda",
+		26,
+	};
+	
+	display(PandaCoding);
+	return 0;
+}
